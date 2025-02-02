@@ -1,6 +1,12 @@
 <?php
-
+    session_start();
     require_once "config/conn.php";
+
+    if(!isset($_SESSION["login"])){
+        header("Location: login.php");
+        exit;
+    }
+
     if(isset($_POST["submit"])  ){
         $judul = htmlspecialchars($_POST["judul"]);
         $gambar = $_FILES["gambar"];

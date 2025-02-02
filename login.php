@@ -1,5 +1,11 @@
 <?php 
 require_once "config/conn.php";
+session_start();
+
+if(isset($_SESSION["login"])){
+    header("Location: index.php");
+    exit;
+}
 
 if(isset($_POST["login"])) {
     $username = htmlspecialchars($_POST["username"]);
@@ -11,6 +17,10 @@ if(isset($_POST["login"])) {
     
     if (mysqli_num_rows($query) == 1) {
         if($user["username"] == $username && password_verify($password, $user["password"])) {
+            $_SESSION["login"] = true;
+            $cookie_name = "user";
+            $cookie_value = $username;
+            setcookie($cookie_name, $cookie_value, time() + 120, "/"); // 2 menit
                 echo "
                 <script>
                     alert('Login berhasil!');
