@@ -2,7 +2,7 @@
     session_start();
     require_once "config/conn.php";
 
-    if(!isset($_SESSION["login"])){
+    if(!isset($_SESSION["login"]) && !isset($_COOKIE["user"])){
         header("Location: login.php");
         exit;
     }

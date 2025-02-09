@@ -2,7 +2,12 @@
 require_once "config/conn.php";
 session_start();
 
-if(isset($_SESSION["login"])){
+if(isset($_COOKIE["user"])){
+    header("Location: index.php");
+    exit;
+}
+
+if(isset($_COOKIE["user"]) && isset($_SESSION["login"])){
     header("Location: index.php");
     exit;
 }
@@ -20,7 +25,7 @@ if(isset($_POST["login"])) {
             $_SESSION["login"] = true;
             $cookie_name = "user";
             $cookie_value = $username;
-            setcookie($cookie_name, $cookie_value, time() + 120, "/"); // 2 menit
+            setcookie($cookie_name, $cookie_value, time() + 60, "/"); // 1 menit
                 echo "
                 <script>
                     alert('Login berhasil!');
